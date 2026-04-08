@@ -24,7 +24,12 @@ class LoadStreamlitUI:
             if self.user_controls["selected_llm"] == 'Groq':
                 # Model selection
                 model_options = self.config.get_groq_model_options()
-                self.user_controls["selected_groq_model"] = st.selectbox("Select Model", model_options)
+                default_model = self.config.get_default_groq_model()
+                self.user_controls["selected_groq_model"] = st.selectbox(
+                    "Select Model",
+                    model_options,
+                    index=model_options.index(default_model) if default_model in model_options else 0,
+                )
                 self.user_controls["GROQ_API_KEY"] = st.session_state["GROQ_API_KEY"]=st.text_input("API Key",type="password")
                 # Validate API key
                 if not self.user_controls["GROQ_API_KEY"]:
